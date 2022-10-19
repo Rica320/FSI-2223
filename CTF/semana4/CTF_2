@@ -1,0 +1,37 @@
+CVE-2021-34646 --> vulnerabidade no woocommerce do wordpress que permite roubar acesso a conta
+
+--> Ao olhar para o site percebemos logo que é um site wordpress. Na direita em baixo fala nos em posts de um "admin"
+no rodapé vemos a marca do plugin "woocommerce"
+
+como funciona? fazemos um pedido de reset de conta na pagina home com o atributo php wcj_user_id4
+
+como eles usam algo do estilo : md5 (time () ) para gerar o token para verificar o email, nem precisamos de ter acesso ao mail!
+
+basta forcar o pedido de reenvio e ver o timing e gerar o nosso md5 que dps pode ser usado para forçar a entrada ao fazer
+a confirmacao de ativacao do mail q nos manda diretamente para a conta!
+
+Passos:
+
+o nome comum é admin e costuma ter ID = 1 
+
+portanto vamos fazer um pedido de reenvio para esse id:
+
+http://ctf-fsi.fe.up.pt:5001/?wcj_user_id=1
+
+vendo o tempo que demorou (ou controlando pela consola do browser o pedido de envio e convertendo para epoch ou
+tentando correr um script em simultaneo para encaixar o time() ) usando o seguinte codigo php:
+
+$code = base64_encode(json_encode( array( 'id' => 1, 'code' => (md5 (time())) )));
+
+
+com isto fizemos engenharia reversa do token de confirmacao de ativacao de mail. Agr basta ativar o mail!
+
+Para tal usamos o link: http://ctf-fsi.fe.up.pt:5001/wp-login.php?wcj_verify_email=MY_TOKEN
+onde substituimos o MY_TOKEN pelo valor guardado em $code!
+
+Com isto entramos como admin no site. Dps vamos ao canto superior direito ao perfil do admin e entramos na consola do wordpress.
+Lá tem um post unico com a flag: flag{please don't bother me}
+
+
+Para detalhes tecnicos consultar:
+https://www.wordfence.com/blog/2021/08/critical-authentication-bypass-vulnerability-patched-in-booster-for-woocommerce/
