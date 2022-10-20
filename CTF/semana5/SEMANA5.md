@@ -1,41 +1,61 @@
-# Desafio 1
+# Semana 5
 
->mem_file é aberto pelo programa e lido
+## Desafio 1
 
->se rescrevermos a variável meme_file conseguimos abrir um ficheiro à nossa escolha
+Analisando o ficheiro .c percebemos que estas 4 linhas de código sao críticas:
 
->Existe um buffer-overflow ao escrever para o buffer. A escrita fora dos parámetros desejáveis permite rescrever o meme_file
-podemos assim enganar o programa de forma a abrir o ficheiro que desejá-mos.
+```C
+    char meme_file[8] = "mem.txt\0";
+    char buffer[20];
+    scanf("%28s", &buffer);
+    FILE *fd = fopen(meme_file,"r");
+```
 
-Escrever 20 carácteres seguidos de flag.txt
+O conteudo de um ficheiro especificado na varíavel meme_file é printado.
+O scanf permite overflow e escrever no buffer e os bytes overflow vão parar ao mem_file array na stack.
+Assim, se conseguirmos preencher o buffer[20] e depois alterarmos o mem_file[8] para conter "flag.txt" conseguimos forçar o programa a abrir e ler os conteudos de um ficheiro que desejamos. Noutras palavras, forçar o programa a dar nos a flag em flag.txt!
 
-flag{8459a55....65}
+Vamos usar 20 chars aleatórios e de seguida a string "flag.txt".
+Os 20 "a" ocupam o buffeer[] e a parte "flag.txt" será guardada no meme_file, rederecionando o programa para ler e printar o flag.txt.
 
-# Desafio 2
+Input para gerar overflow e adquirir a flag: **aaaaaaaaaaaaaaaaaaaaflag.txt**
 
-> Foi colocado um valor entre o meme_file e o buffer que serve como verificação para possíveis rescritas. Esse valor não é possível escrever com o teclado.
+![""](d1_1.png)
 
-> Conseguimos na mesma fazer rescrever o meme_file
+![""](d1_2.png)
 
-> Existe um buffer-overflow. Neste caso temos de escrever o valor de proteção seguido da path do ficheiro da flag
+## Desafio 2
 
-Notas :
+Neste caso, foi adicionado um valor entre o meme_file e o buffer que serve como verificação para possíveis rescritas, sendo este valor impossível de escrever com o teclado &rarr; temos de arranjar maneira de rescreever os dados do meme_file e garantir que ```if(*(int*)val == 0xfefc2223)``` se verifica para o conteudo do ficheiro escolhido em meme_file seja printado.
 
-cast para apontadores de inteiros -> não relevante
+```C
+    char meme_file[8] = "mem.txt\0";
+    char val[4] = "\xef\xbe\xad\xde";
+    char buffer[20];
+```
 
-usar convertor de string para conseguir o val -> convertor não viável
+Portanto, temos de dar overflow e escrever nos 3 arrays e garantir q o val[] tem o valor hexadecimal 0xfefc2223 para a condição no if clause se verificar e o programa nos mostrar a flag.
 
-deadbeef in hex
+A ideia é esta (tendo em conta a ordem de escrita nos buffers):
 
-DPS de algumas horas ...
+meme_file[20] &rarr; *aaaaaaaaaaaaaaaaaaaa*
+val[4] &rarr; *0xfefc2223*
+meme_file[8] &rarr; *flag.txt*
 
-para passar é impossível mandar pela bash (não é possível escrever esses carácters). Que mundo cruel!!!
-solução ... mandar um ficheiro :)
 
-user echo "1..20#"__flag.txt " > ex.txt
+Temos de descobrir como manter o hexadecimal. Tomando partido do ascii code, vamos procurar os chars cujo ascii seja o represendado pelos chars 0xFE 0xFC 0x22 0x23.
 
-em que __ são os dois caracteres que n se consegue passar pela bash 
-e #"__ == 0xfefc2223 (por ordem inversa por ser string)
-e 1 .. 20, são os 20 chars iniciais
+Usando um chars.c criado por nos para printar os chars, temos:
 
-Flag conseguida ... {d36 ... ae80}
+![""](d2_1.png)
+
+Assim o input a dar para ter overflow será **aaaaaaaaaaaaaaaaaaaa#"��flag.txt**
+
+
+Como o terminal não lida corretamente com estes chars, temos de passar logo o output do ./chars para o ./program! Ficamos com isto:
+
+![""](d2_2.png)
+
+Aplicando isto agora ao site, econtramos a desejada flag!
+
+![""](d2_3.png)
