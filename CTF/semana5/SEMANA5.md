@@ -42,7 +42,6 @@ meme_file[20] &rarr; *aaaaaaaaaaaaaaaaaaaa*
 val[4] &rarr; *0xfefc2223*
 meme_file[8] &rarr; *flag.txt*
 
-
 Temos de descobrir como manter o hexadecimal. Tomando partido do ascii code, vamos procurar os chars cujo ascii seja o represendado pelos chars 0xFE 0xFC 0x22 0x23.
 
 Usando um chars.c criado por nos para printar os chars, temos:
@@ -50,7 +49,6 @@ Usando um chars.c criado por nos para printar os chars, temos:
 ![""](d2_1.png)
 
 Assim o input a dar para ter overflow será **aaaaaaaaaaaaaaaaaaaa#"��flag.txt**
-
 
 Como o terminal não lida corretamente com estes chars, temos de passar logo o output do ./chars para o ./program! Ficamos com isto:
 
