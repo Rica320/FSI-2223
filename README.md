@@ -2,16 +2,20 @@
 
 Neste repositório encontram-se as resoluções deste grupo para os exercícios propostos em aula (logbooks) e para os desafios CTF (Capture The Flag) que nos são propostos.
 
-## CTFs
-
-- [Semana 4](CTF/semana4/SEMANA4.md)
-- [Semana 5](CTF/semana5/SEMANA5.md)
-
 ## Logbooks
 
 - [Aula 3](Logbooks/aula3/LOGBOOK3.md)
 - [Aula 4](Logbooks/aula4/LOGBOOK4.md)
 - [Aula 5](Logbooks/aula5/LOGBOOK5.md)
+
+## CTFs
+
+- [Semana 4](CTF/semana4/SEMANA4.md)
+- [Semana 5](CTF/semana5/SEMANA5.md)
+
+## Extras
+
+- [British Punctuality](CTF_Extra/British/British.md)
 
 ## Grupo
 
