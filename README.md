@@ -7,11 +7,13 @@ Neste repositório encontram-se as resoluções deste grupo para os exercícios 
 - [LOGBOOK 3](Logbooks/aula3/LOGBOOK3.md)
 - [LOGBOOK 4](Logbooks/aula4/LOGBOOK4.md)
 - [LOGBOOK 5](Logbooks/aula5/LOGBOOK5.md)
+- [LOGBOOK 6](Logbooks/aula6/LOGBOOK6.md)
 
 ## CTFs
 
 - [Semana 4](CTF/semana4/SEMANA4.md)
 - [Semana 5](CTF/semana5/SEMANA5.md)
+- [Semana 6](CTF/semana6/SEMANA6.md)
 
 ## Extras
 
