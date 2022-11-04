@@ -12,6 +12,8 @@ Notar também que arquitetura é little-endian, pelo que endereços usados devem
 
 Usando o gdb para achar o endereço do que desejamos ler temos: x08 04 c0 60 &rarr; \x60\xc0\x04\x08
 
+![""](d1_addr.jpg)
+
 Com o endereço em mãos, podemos forçar o printf a mostrar o conteudo deste endereço específico.
 
 Como só desejamos ler uma string, vamos guardar no buffer algo do género: `printf(ENDEREÇO_STR + %s)`
