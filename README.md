@@ -14,7 +14,7 @@ Neste repositório encontram-se as resoluções deste grupo para os exercícios 
 - [Semana 4](CTF/semana4/SEMANA4.md)
 - [Semana 5](CTF/semana5/SEMANA5.md)
 - [Semana 7](CTF/semana6/SEMANA7.md)
-- [Semana 8](CTF/semana6/SEMANA8.md)
+- [Semana 8](CTF/semana8/SEMANA8.md)
 
 ## Extras
 
