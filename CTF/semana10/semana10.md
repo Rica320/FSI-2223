@@ -6,7 +6,7 @@
 
 ## Desafio 2
 
-- É possível fazer login, um teste à velociada da net e dar ping de um host.
+- É possível fazer login, um teste à velociadade da net e dar ping de um host.
 - Para dar ping de um host quase de certeza que é utilizado o utilitário ping do linux. Se a string que for enviada para o comando for controlada por nós então podemos executar um comando por nós desejado.
 
 Ao testar se o ponto anterior de facto ocorria chegou-se à solução do desafio.
