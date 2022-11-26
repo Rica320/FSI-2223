@@ -16,10 +16,12 @@ Neste repositório encontram-se as resoluções deste grupo para os exercícios 
 - [Semana 5](CTF/semana5/SEMANA5.md)
 - [Semana 7](CTF/semana7/SEMANA7.md)
 - [Semana 8](CTF/semana8/SEMANA8.md)
+- [Semana 10](CTF/semana8/SEMANA10.md)
 
 ## Extras
 
 - [British Punctuality](CTF_Extra/British/British.md)
+- [Final Format](CTF_Extra/FinalFormat/final_format.md)
 
 ## Grupo
 
