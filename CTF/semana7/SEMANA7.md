@@ -24,7 +24,7 @@ Após pouco tempo para perceber a dinâmica envolvida neste tipo de ataques, che
 
 ## Desafio 2
 
-Para este desafio podemos seguir a mesma lógica e tomar partido de um format string para alterar a variável pretendida para 0xbeef e abrir um terminal para acedermos a flag.txt.
+Para este desafio podemos seguir a mesma lógica e tomar partido de um format string para alterar a variável pretendida para `0xbeef` e abrir um terminal para acedermos a flag.txt.
 
 ![""](d2_anal.png)
 
@@ -33,6 +33,8 @@ Para tal, teremos de manipular o valor guardado num endereço de memória e não
 Como desejamos ter na variável 0xbeef, 48879 em base 10, temos de fazer print de 48879 chars. Isto é inviável considerando o tamanho de buffer.
 Podemos tomar partido de formatadores de string:
 %10s &rarr; imprime uma string com 10 espaços em branco à esquerda.
+
+![""](d2_convert.png)
 
 ![""](d2_key_addr.png)
 
@@ -51,5 +53,3 @@ Conseguimos abrir a backdoor! Agora temos uma shell e basta ler a flag do flag.t
 Uma solução alternativa e que poupa tempo ...
 
 ![](sol_alternativa.png)
-
-
