@@ -7,7 +7,7 @@ No primeiro desafio deparamo-nos com um site no qual temos de fazer login como a
 
 Olhando para o código identificamos rapidamente uma vulnerabilidade:
 
-![""](d1_code.png)****
+![""](d1_code.png)
 
 É possível fazer uma SQL injection!
 
