@@ -9,6 +9,7 @@ Neste repositório encontram-se as resoluções deste grupo para os exercícios 
 - [LOGBOOK 5](Logbooks/aula5/LOGBOOK5.md)
 - [LOGBOOK 6](Logbooks/aula6/LOGBOOK6.md)
 - [LOGBOOK 7](Logbooks/aula7/LOGBOOK7.md)
+- [LOGBOOK 8](Logbooks/aula8/LOGBOOK8.md)
 
 ## CTFs
 
