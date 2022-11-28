@@ -1,7 +1,20 @@
-# Semana 8
+# Semana 10
 
 
 ## Desafio 1
+
+Neste desafio reparamos rapidamente que um ataque XSS era possível:
+
+![](alert_script.png)
+
+![](alert_result.png)
+
+
+Vamos então explorar esta vulnerabilidade para alcançar a flag. 
+Nós sabemos que a página de admin é a mesma que a do utilizador. A única coisa que muda do ponto de vista do admin são os botões que são clicáveis para ele tomar a decisão. Essa decisão é depois apresentada passados uns 5s ao utilizador.
+
+
+![image-1.png](./image-1.png)
 
 
 ## Desafio 2
