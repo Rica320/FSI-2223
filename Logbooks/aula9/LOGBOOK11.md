@@ -301,7 +301,7 @@ Now, let's simulate an attack on the DNS by changing the /etc/hosts file on our 
 
 ![""](task5_2.png)
 
-And in our browser, if we go to https://facebook.com we can see our website working
+And in our browser, if we go to https://www.facebook.com we can see our website working
 
 ![""](task5_3.png)
 
