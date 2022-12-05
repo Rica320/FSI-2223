@@ -240,7 +240,7 @@ And now, we need to change the Docker file to this:
 
 ![""](task4_3.png)
 
-Now we can start our container (make sure there are not problems while building the container) and in our container, in order to start the apache server, we need to run the following command:
+Now we can start our container (make sure there are no problems while building the container) and in our container, in order to start the apache server, we need to run the following command:
 
 `service apache2 start`
 
