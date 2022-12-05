@@ -20,6 +20,10 @@ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 \
 	-passout pass:super_secure_ca
 ```
 
+And the ca.crt file is generated:
+
+![""](task1_1.png)
+
 
 ### What part of the certificate indicates this is a CA’s certificate?
 
@@ -30,11 +34,14 @@ We see that the one who issued this certificate is Model CA LTD.
 
 We can see that is is a self-signed certificate because the subject and the issuer are the same.
 
-# Crop the certificate
+![""](task1_2.png)
 
 
-###  In the RSA algorithm, we have a public exponent e, a private exponent d, a modulus n, and two secret numbers p and q, such that n = pq. Please identify the values for these elements in your certificate and key files
+### Values of RSA algorithm
 
+In the RSA algorithm, we have a public exponent e, a private exponent d, a modulus n, and two secret numbers p and q, such that n = pq. 
+
+In our certificate, these values are:
 
 Public exponent e: 65537 (0x10001)
 
@@ -158,8 +165,6 @@ prime2 (q):
 
 
 
-
-
 ## Task 2
 
 In order to generate a Certificate Signing Request we can use the following command:
@@ -179,10 +184,10 @@ In here we also used the SAN extension to provide several hostnames in our certi
 Both server.key and server.csr were generated:
 
 
-![""](task2_1server_crs.png)
+![""](task2_1.png)
 
 
-![""](task2_2server_key.png)
+![""](task2_2.png)
 
 
 ## Task 3
@@ -200,7 +205,7 @@ openssl ca -config myCA_openssl.cnf -policy policy_anything \
 
 Now, we can just open the new generated server.crt file:
 
-![""](task3_1server_crt.png)
+![""](task3_1.png)
 
 
 Or run the following command to check the information of the certificate:
@@ -211,7 +216,7 @@ openssl x509 -in server.crt -text -noout
 
 And the result:
 
-![""](task3_2server_crt_terminal.png)
+![""](task3_2.png)
 
 
 # Task 4
