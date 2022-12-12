@@ -20,10 +20,6 @@ openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 \
 	-passout pass:super_secure_ca
 ```
 
-And the ca.crt file is generated:
-
-![""](task1_1.png)
-
 
 ### What part of the certificate indicates this is a CA’s certificate?
 
@@ -34,14 +30,11 @@ We see that the one who issued this certificate is Model CA LTD.
 
 We can see that is is a self-signed certificate because the subject and the issuer are the same.
 
-![""](task1_2.png)
+# Crop the certificate
 
 
-### Values of RSA algorithm
+###  In the RSA algorithm, we have a public exponent e, a private exponent d, a modulus n, and two secret numbers p and q, such that n = pq. Please identify the values for these elements in your certificate and key files
 
-In the RSA algorithm, we have a public exponent e, a private exponent d, a modulus n, and two secret numbers p and q, such that n = pq. 
-
-In our certificate, these values are:
 
 Public exponent e: 65537 (0x10001)
 
@@ -165,6 +158,8 @@ prime2 (q):
 
 
 
+
+
 ## Task 2
 
 In order to generate a Certificate Signing Request we can use the following command:
@@ -240,7 +235,7 @@ And now, we need to change the Docker file to this:
 
 ![""](task4_3.png)
 
-Now we can start our container (make sure there are no problems while building the container) and in our container, in order to start the apache server, we need to run the following command:
+Now we can start our container (make sure there are not problems while building the container) and in our container, in order to start the apache server, we need to run the following command:
 
 `service apache2 start`
 
@@ -266,9 +261,44 @@ After adding our own CA certificate to our browser, our website is no longer con
 
 # Task 5
 
-First of all, let's set up our fake social network website, by following the same steps as in task 4 (and also generate the new website certificate like in task 2 and 3).
+In this task, let's start by hosting our fake social network website.
 
 Our "fake" social network website will be: www.facebook.com
+
+We need to change the docker file and the apache configuration file, just like in task 4, in order to host our website.
+
+Dockerfile:
+
+![""](task5_1.png)
+
+
+Apache configuration file:
+
+![""](task5_2.png)
+
+
+If we go to our browser, and go to www.facebook.com, this is what we will currently see:
+
+![""](task5_3.png)
+
+Now, let's simulate an attack on the DNS by changing the /etc/hosts file on our computer, and add the entry: 10.9.0.80 www.facebook.com
+
+![""](task5_4.png)
+
+
+And now in our browser, if we go to https://facebook.com we can see that our website is considered unsafe by the browser:
+
+![""](task5_5.png)
+
+This is because we don't have a certificate of our website signed by a ca. 
+Since the browser can't confirm the authenticity of our website, it shows a warning to the user. This way ca certificates can prevent MITM attacks.
+
+
+# Task 6
+
+If we have the private key of the ca, we can generate our own certificates, that are apparently signed by the ca.
+
+Let's start by generating the cetificates, just like in task 2 and 3.
 
 
 Generate the Certificate Signing Request:
@@ -289,31 +319,26 @@ openssl ca -config myCA_openssl.cnf -policy policy_anything \
 	-in facebook.csr -out facebook.crt -batch \
 	-cert ca.crt -keyfile ca.key
 ```
+Now we need to change the docker file and the apache configuration file.
 
-Change the docker file and the apache configuration file, just like in task 4, and we have our website.
+Dockerfile:
 
-If we go to our browser, and go to www.facebook.com, this is what we will see:
-
-![""](task5_1.png)
+![""](task6_1.png)
 
 
-Now, let's simulate an attack on the DNS by changing the /etc/hosts file on our computer, and add the entry: 10.9.0.80 www.facebook.com
+Apache configuration file:
 
-![""](task5_2.png)
+![""](task6_2.png)
 
-And in our browser, if we go to https://www.facebook.com we can see our website working
 
-![""](task5_3.png)
+
+Now, following the same steps as in the previous task, if we go to https://facebook.com we can see our website working
+
+![""](task6_3.png)
+
+With this, we understand that it's extremely important for ca's to keep their key secure, otherwise, MITM attacks will not be prevented.
 
 In a real attack, we could modify our page to look like facebook's real home page, in order to deceive the victims to give their passwords.
-
-
-# Task 6
-
-Basically, if we already know the private key of a CA, we can just use it to sign our own certificate of the website, and thus, the user will believe our website is "aproved" by that CA, when in fact that didn't happen.
-
-
-
 
 
 
