@@ -8,7 +8,6 @@ Neste desafio temos de descobrir os primos `p` e `q` usados em **RSA**. Com esse
 
 >0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000047b83e67887ac631c19178ef27d9fadb342fcb43792aa962237e32c2e089130b781ffab5a04a5eb1a4e98b6c9a2299ff4267227df8b7f2a59297da6244a7db85a58f08f8bcbdee010d9e7fc6de9376eb2f039a0c065c7bc9e83379a8294cd3c7dbcfdbf8de096a84ba3a1aea4cb8b7573e8f13d3c57b01450fee037ef3471da
 
-
 ### Resolução
 
 É-nos dito que `p` e `q` são números próximos a seguir a 2^512 e 2^513, respetivamente. Após alguma procura na internet, encontramos o site *Wolfram* que nos indica quais serão esses primos.
@@ -22,9 +21,9 @@ Temos então que:
 >q=26815615859885194199148049996411692254958731641184786755447122887443528060147093953603748596333806855380063716372972101707507765623893139892867298012168351
 
 > n = p * q
-> 
+>
 > e = 0x10001 (constante dada no enunciado)
-> 
+>
 > v = (p-1)*(q-1)
 
 Falta-nos apenas calcular o `d` para descodificar a flag. O seu cálculo é feito através de `(d * e) % v = 1`.
@@ -60,15 +59,13 @@ Calculando então `d` com estas funções e os valores dos primos previamente en
 
 Por fim, com todos os valores, podemos finalmente utilizar a função de descodificação fornecida `dec(y)` para correr o script e descodificar a mensagem!
 
-
 ![](flag_1.png)
-
 
 ## Desafio 2
 
 ### Contexto
- 
-Neste desafio temos duas mensagens codificadas com diferentes `E` mas igual `N`. 
+
+Neste desafio temos duas mensagens codificadas com diferentes `E` mas igual `N`.
 
 O valor de `N` é dado no enunciado:
 
@@ -153,14 +150,13 @@ Finalmente, podemos calcular a mensagem descodificada. Esta aparecerá como um n
 m = ((c1**a) * i**(-b)) % n
 
 print(f"m(int) = {m}\n\n")
-print(f"m(hex) = {hex(m)}\n\n")	
-print(f"m(str) = {bytearray.fromhex(str(hex(m)[2:])).decode()}")	
+print(f"m(hex) = {hex(m)}\n\n") 
+print(f"m(str) = {bytearray.fromhex(str(hex(m)[2:])).decode()}") 
 ```
 
 Obtemos então a desejada flag!
 
 ![](flag_2.png)
-
 
 #### Observações
 
@@ -173,25 +169,3 @@ Para contornar este problema, temos de aumentar o número limite de chamadas rec
 import sys
 sys.setrecursionlimit(2000)
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
