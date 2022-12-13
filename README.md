@@ -26,6 +26,7 @@ Neste repositório encontram-se as resoluções deste grupo para os exercícios 
 - [British Punctuality](CTF_Extra/British/British.md)
 - [Final Format](CTF_Extra/FinalFormat/final_format.md)
 - [Apply For Flag](CTF_Extra/Apply_For_Flag2/apply_for_flag.md)
+- [Number Station](CTF_Extra/NumberStation3/NumberStation3.md)
 
 ## Grupo
 
