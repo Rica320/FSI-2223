@@ -162,7 +162,7 @@ Obtemos então a desejada flag!
 
 **Observação 1:** A computação de `M` envolve grandes cálculos pelo que pode demorar vários minutos até o valor ser determinado.
 
-**Observação 2:** As funções requeridas pra executar estes cálculos usam por base recursão. Como os valores utilizados são muito grandes, a abordagem recursiva em Python leva ao esgotamento dos recursos alocados levantando uma exceção (estamos limitados a 1000 chamdas recursivas).
+**Observação 2:** As funções requeridas pra executar estes cálculos usam por base recursão. Como os valores utilizados são muito grandes, a abordagem recursiva em Python leva ao esgotamento dos recursos alocados levantando uma exceção (estamos limitados a 1000 chamadas recursivas).
 Para contornar este problema, temos de aumentar o número limite de chamadas recursivas que o Python pode fazer:
 
 ```py
