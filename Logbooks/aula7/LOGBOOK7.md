@@ -85,40 +85,45 @@ This way we can update the salary of alice according to what we want.
 
 ## Task 3.2  
 
-This is a similar case to the previous one.
-We just need to log in, and fill the edit profile page using the same method as before.
+We just increased our salary. Now, it's time for us to punish our boss, Boby!
 
+In order to reduce his salary to just one dollar, we can alter the update statement, just like before, by typing: `Loser',salary=1 where Name='Boby'#`.
+
+Just like this:
 
 ![""](task3_2a.png)
+
+And now we can see that boby's salary has indeed changed:
 
 ![""](task3_2b.png)
 
 
+
 ## Task 3.3
 
-This one is very simple. Just login into boby's account (using the same method as before)
-and change the password in the edit profile input and press save.
 
+Let's change boby's password to "vengeance".
 
-![""](task3_3a.png)
+The sha1 hash is: 7e87ef124a4e96ccaea057ed975dd42743689e3f
 
-![""](task3_3b.png)
-
-![""](task3_3c.png)
-
-The password used was: revenge
-
-The sha1 hash is: 4bcd0679aebb6dfd786a2f02105169a8dc82d4fa
+In order to change his password to revenge, we can use a similar technique as before.
+Just by typing: `Loser',password='7e87ef124a4e96ccaea057ed975dd42743689e3f' where Name='Boby'#`.
 
 And as we can see in the database, the hash was changed according to what we wanted.
 
-![""](task3_3d.png)
+![""](task3_3a.png)
 
 
+Now, if we try to login into boby's account:
 
 
+![""](task3_3b.png)
 
 
+![""](task3_3c.png)
+
+
+We can see that the login was successful! 
 
 
 
