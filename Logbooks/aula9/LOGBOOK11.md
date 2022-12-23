@@ -1,4 +1,3 @@
-
 # Certificate Authority
 
 ## Task 1
@@ -30,9 +29,9 @@ We can see that is is a self-signed certificate because the subject and the issu
 
  In the RSA algorithm, we have a public exponent e, a private exponent d, a modulus n, and two secret numbers p and q, such that n = pq. Please identify the values for these elements in your certificate and key files
 
-Public exponent e: 65537 (0x10001)
+**Public exponent e:** 65537 (0x10001)
 
-Private exponent d:
+**Private exponent d:**
 78:c7:e4:0d:df:17:ab:14:4f:d1:4f:ce:ab:93:63:
     21:e2:11:5d:63:bc:2b:f9:fd:d3:15:11:a1:30:e8:
     be:fd:d5:09:21:3f:b0:3b:60:4d:39:56:6b:f1:7e:
@@ -69,7 +68,7 @@ Private exponent d:
     54:da:17:2d:b4:19:64:75:a3:4d:0e:f4:20:d2:cd:
     5d:a1
 
-Modulus n:
+**Modulus n:**
     00:cd:55:6b:27:36:e7:08:31:cc:51:c2:14:ed:6e:
     d3:3c:95:ad:4e:5a:c6:9b:e2:af:bf:4f:dd:b8:e8:
     70:33:78:2f:1d:9e:99:69:1d:d2:06:0a:69:09:c9:
@@ -106,7 +105,7 @@ Modulus n:
     ff:bf:41:b6:b7:9f:57:41:1a:7b:82:29:d9:48:12:
     11:95:2f
 
-prime1 (p):
+**prime1 (p):**
     00:ff:42:bd:ab:c9:0c:70:18:e2:ac:cf:bd:cc:fe:
     39:d9:e9:e4:63:fc:4b:73:15:10:52:88:63:70:0d:
     ed:f0:11:fe:97:4c:69:bb:76:25:e2:f0:51:c7:aa:
@@ -126,7 +125,7 @@ prime1 (p):
     10:5f:7f:43:8e:e8:95:95:b1:fd:bf:c6:10:86:9c:
     98:17
 
-prime2 (q):
+**prime2 (q):**
     00:cd:ed:a8:f7:f9:b9:d4:20:9e:8c:e5:16:78:91:
     80:31:79:8b:f0:d0:e3:85:0b:b5:65:1c:39:13:16:
     a8:b7:42:32:20:3a:77:e5:07:ec:8e:57:65:43:40:
