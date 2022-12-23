@@ -2,9 +2,7 @@
 
 ### Vulnerabilidade 
 
-Primeiramente notou-se que a geração da chave de encriptação consiste na realização de um 'and lógico' com 1 de todos os bytes que são gerados aleatóriamente. 
-
-Tal é uma vulnerabilidade pois baixa o número de possibilidades de chaves de 2^256 para 2^16. Esse valor é facilmente atingível por um computador pessoal.
+Primeiramente notou-se que a geração da chave de encriptação consiste na realização de um 'and lógico' com 1 de todos os bytes que são gerados aleatóriamente. Tal trata-se de uma vulnerabilidade pois baixa o número de possibilidades de chaves de 2^256 para 2^16 sendo este último valor facilmente atingível por um computador pessoal.
 
 ![imagem.png](./imagem.png)
 
