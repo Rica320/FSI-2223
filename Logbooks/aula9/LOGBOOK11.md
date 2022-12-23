@@ -1,7 +1,5 @@
 
-
 # Certificate Authority
-
 
 ## Task 1
 
@@ -15,30 +13,26 @@ Now, we can create a ca certificate using the command:
 
 ```
 openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 \
-	-keyout ca.key -out ca.crt \
-	-subj "/CN=www.modelCA.com/O=Model CA LTD./C=US" \
-	-passout pass:super_secure_ca
+ -keyout ca.key -out ca.crt \
+ -subj "/CN=www.modelCA.com/O=Model CA LTD./C=US" \
+ -passout pass:super_secure_ca
 ```
-
 
 ### What part of the certificate indicates this is a CA’s certificate?
 
 We see that the one who issued this certificate is Model CA LTD.
 
-
 ### What part of the certificate indicates this is a self-signed certificate?
 
 We can see that is is a self-signed certificate because the subject and the issuer are the same.
 
-# Crop the certificate
+### Crop the certificate
 
-
-###  In the RSA algorithm, we have a public exponent e, a private exponent d, a modulus n, and two secret numbers p and q, such that n = pq. Please identify the values for these elements in your certificate and key files
-
+ In the RSA algorithm, we have a public exponent e, a private exponent d, a modulus n, and two secret numbers p and q, such that n = pq. Please identify the values for these elements in your certificate and key files
 
 Public exponent e: 65537 (0x10001)
 
-Private exponent d: 
+Private exponent d:
 78:c7:e4:0d:df:17:ab:14:4f:d1:4f:ce:ab:93:63:
     21:e2:11:5d:63:bc:2b:f9:fd:d3:15:11:a1:30:e8:
     be:fd:d5:09:21:3f:b0:3b:60:4d:39:56:6b:f1:7e:
@@ -74,7 +68,6 @@ Private exponent d:
     dd:b2:74:d4:2d:79:b3:08:bd:ee:25:28:2b:a9:1f:
     54:da:17:2d:b4:19:64:75:a3:4d:0e:f4:20:d2:cd:
     5d:a1
-
 
 Modulus n:
     00:cd:55:6b:27:36:e7:08:31:cc:51:c2:14:ed:6e:
@@ -113,7 +106,6 @@ Modulus n:
     ff:bf:41:b6:b7:9f:57:41:1a:7b:82:29:d9:48:12:
     11:95:2f
 
-
 prime1 (p):
     00:ff:42:bd:ab:c9:0c:70:18:e2:ac:cf:bd:cc:fe:
     39:d9:e9:e4:63:fc:4b:73:15:10:52:88:63:70:0d:
@@ -133,7 +125,6 @@ prime1 (p):
     7e:ae:c6:c8:19:6b:00:89:0b:81:71:fc:f0:7e:1e:
     10:5f:7f:43:8e:e8:95:95:b1:fd:bf:c6:10:86:9c:
     98:17
-
 
 prime2 (q):
     00:cd:ed:a8:f7:f9:b9:d4:20:9e:8c:e5:16:78:91:
@@ -155,53 +146,42 @@ prime2 (q):
     0b:0c:28:c3:f4:f8:e6:4f:10:b6:e8:a3:b1:b0:27:
     02:a9
 
-
-
-
-
-
 ## Task 2
 
 In order to generate a Certificate Signing Request we can use the following command:
 
 ```
 openssl req -newkey rsa:2048 -sha256 \
-	-keyout server.key -out server.csr \
-	-subj "/CN=www.matosandrealves2022.com/O=MatosAndreAlves Inc./C=US" \
-	-passout pass:super_secure_ca \
-	-addext "subjectAltName = DNS:www.matosandrealves2022.com, \
-	DNS:www.matosandrealves2022A.com, \
-	DNS:www.matosandrealves2022B.com"
+ -keyout server.key -out server.csr \
+ -subj "/CN=www.matosandrealves2022.com/O=MatosAndreAlves Inc./C=US" \
+ -passout pass:super_secure_ca \
+ -addext "subjectAltName = DNS:www.matosandrealves2022.com, \
+ DNS:www.matosandrealves2022A.com, \
+ DNS:www.matosandrealves2022B.com"
 ```
 
 In here we also used the SAN extension to provide several hostnames in our certificate.
 
 Both server.key and server.csr were generated:
 
-
 ![""](task2_1.png)
-
 
 ![""](task2_2.png)
 
-
 ## Task 3
-
 
 Now, in order to for our CA to sign the CSR (server.csr) we can use de following command:
 
 ```
 openssl ca -config myCA_openssl.cnf -policy policy_anything \
-	-md sha256 -days 3650 \
-	-in server.csr -out server.crt -batch \
-	-cert ca.crt -keyfile ca.key
+ -md sha256 -days 3650 \
+ -in server.csr -out server.crt -batch \
+ -cert ca.crt -keyfile ca.key
 ```
-
 
 Now, we can just open the new generated server.crt file:
 
 ![""](task3_1.png)
-
 
 Or run the following command to check the information of the certificate:
 
@@ -213,15 +193,11 @@ And the result:
 
 ![""](task3_2.png)
 
-
-# Task 4
-
-
+## Task 4
 
 So, in order for use to host our own website we need to take a few steps.
 
 First, of all, let's use the certificates that we have already generated in the previous tasks, and place them inside the certs folder.
-
 
 ![""](task4_1.png)
 
@@ -252,14 +228,11 @@ If we type "about:preferences#privacy" in the address bar, and select View Certi
 
 ![""](task4_6.png)
 
-
 After adding our own CA certificate to our browser, our website is no longer considered insecure by the browser.
 
 ![""](task4_7.png)
 
-
-
-# Task 5
+## Task 5
 
 In this task, let's start by hosting our fake social network website.
 
@@ -271,11 +244,9 @@ Dockerfile:
 
 ![""](task5_1.png)
 
-
 Apache configuration file:
 
 ![""](task5_2.png)
-
 
 If we go to our browser, and go to www.facebook.com, this is what we will currently see:
 
@@ -285,63 +256,54 @@ Now, let's simulate an attack on the DNS by changing the /etc/hosts file on our 
 
 ![""](task5_4.png)
 
-
-And now in our browser, if we go to https://facebook.com we can see that our website is considered unsafe by the browser:
+And now in our browser, if we go to <https://facebook.com> we can see that our website is considered unsafe by the browser:
 
 ![""](task5_5.png)
 
-This is because we don't have a certificate of our website signed by a ca. 
+This is because we don't have a certificate of our website signed by a ca.
 Since the browser can't confirm the authenticity of our website, it shows a warning to the user. This way ca certificates can prevent MITM attacks.
 
-
-# Task 6
+## Task 6
 
 If we have the private key of the ca, we can generate our own certificates, that are apparently signed by the ca.
 
 Let's start by generating the cetificates, just like in task 2 and 3.
 
-
 Generate the Certificate Signing Request:
+
 ```
 openssl req -newkey rsa:2048 -sha256 \
-	-keyout facebook.key -out facebook.csr \
-	-subj "/CN=www.facebook.com/O=Facebook Inc./C=US" \
-	-passout pass:super_secure_ca \
-	-addext "subjectAltName = DNS:www.facebook.com, \
-	DNS:www.faceboook.com, \
-	DNS:www.facebooook.com"
+ -keyout facebook.key -out facebook.csr \
+ -subj "/CN=www.facebook.com/O=Facebook Inc./C=US" \
+ -passout pass:super_secure_ca \
+ -addext "subjectAltName = DNS:www.facebook.com, \
+ DNS:www.faceboook.com, \
+ DNS:www.facebooook.com"
 ```
 
 Have our CA sign the CSR:
+
 ```
 openssl ca -config myCA_openssl.cnf -policy policy_anything \
-	-md sha256 -days 3650 \
-	-in facebook.csr -out facebook.crt -batch \
-	-cert ca.crt -keyfile ca.key
+ -md sha256 -days 3650 \
+ -in facebook.csr -out facebook.crt -batch \
+ -cert ca.crt -keyfile ca.key
 ```
+
 Now we need to change the docker file and the apache configuration file.
 
 Dockerfile:
 
 ![""](task6_1.png)
 
-
 Apache configuration file:
 
 ![""](task6_2.png)
 
-
-
-Now, following the same steps as in the previous task, if we go to https://facebook.com we can see our website working
+Now, following the same steps as in the previous task, if we go to <https://facebook.com> we can see our website working
 
 ![""](task6_3.png)
 
 With this, we understand that it's extremely important for ca's to keep their key secure, otherwise, MITM attacks will not be prevented.
 
 In a real attack, we could modify our page to look like facebook's real home page, in order to deceive the victims to give their passwords.
-
-
-
-
-
-
