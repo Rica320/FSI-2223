@@ -8,6 +8,8 @@ Numa segunda instância percebeu-se que se podia provocar um buffer overflowm vi
 
 Estas duas vulnerabilidades são a base do exploit.
 
+Por fim, notou-se também que o programa tinha todas as proteções ativadas tornando vários tipos de ataques inviáveis ou consideravelmente mais difíceis de pôr em prática como ASLR e o caso de canários para dificultar buffer overflow, por exemplo.
+
 ### Exploit
 
 Primeiro, convém criar uma função para nos ajudar no input para o servidor, uma vez que apenas podemos explorar o nome que enviámos, sendo útil ter uma função para tal.
@@ -24,40 +26,38 @@ def message(p, sms):
    return ans
 ```
 
-Passando agora ao que importa.
-Notou-se numa primeira instância que o programa tinha todas as proteções ativadas. Para facilitar a execução do nosso exploit procurou-se desativar a aslr localmente para tornar mais percéptivel algumas associações e também permitir confirmar a nossa linha de pensamento.
-
+Começando agora propriamente a tratar do exploit, para facilitar o teste do nosso ataque procurou-se desativar a **ASLR** (Address space layout randomization) localmente para tornar mais percéptivel algumas associações e também permitir confirmar a nossa linha de pensamento.
 
 Uma vez que os buffers são colocados junto ao canário suspeitá-mos que o oitavo argumento da stack seria um canário ...
 ![imagem.png](./ECHO1.png)
 
-Uma vez que não tinhamos a certeza absoluta se o oitavo argumento seria ou não o canário decidimos correr o programa duas vezes e verificar se o argumento mudava...
-
-Tal é possível pelo facto de termos desligado o aslr.
+Uma vez que não tinhamos a certeza absoluta se o oitavo argumento seria ou não o canário, decidimos correr o programa duas vezes e verificar se o argumento mudava... (Isto só é possível pelo facto de termos desligado o ASLR.)
 
 ![imagem.png](./imagem.png)
 ![imagem-1.png](./imagem-1.png)
 
-Uma vez que entre o canário e o return address temos o caller's save e o caller's ebp pelo que o o return address estará no 11 argumento.
+Uma vez que entre o canário e o return address temos o caller's save e o caller's ebp, pelo que o o return address estará no 11º argumento.
 
-Argumento 8 e 11...
+Temos os argumentos 8 e 11:
 
 ![imagem-2.png](./imagem-2.png)
 ![imagem-3.png](./imagem-3.png)
 
-Sabendo que esse argumento pertence a uma intrução da __libc_start_main procurou-se descobrir o offset desta para a base da libc
+Sabendo que esse argumento pertence a uma intrução da **__libc_start_main** procurou-se descobrir o offset desta para a base da libc:
 
 ![imagem-4.png](./imagem-4.png)
 
 ![imagem-5.png](./imagem-5.png)
 
-Ao fazer o mesmo para o endereço de __libc_start_main + 245, desta vez dentro do gdb, apercebemo-nos que o offset entre as duas intruções é de - 71 (decimal).
-Nota: A conta varia conforme a biblioteca que se têm
-Tal é importante para que consigámos dar uso a uma biblioteca auxiliar.
+Ao fazer o mesmo para o endereço de __libc_start_main + 245, desta vez dentro do gdb, apercebemo-nos que o offset entre as duas intruções é de - 71 (decimal), sendo este importante para que consigámos dar uso a uma biblioteca auxiliar.
 
-O endereço base será então 0xf7debee5 - libc.symbols["__libc_start_main"] + 71
+**Nota:** A conta do offset varia conforme a biblioteca que se têm instalada
 
-Assim sendo, até aqui temos que 
+O endereço base será então:
+> 0xf7debee5 - libc.symbols["__libc_start_main"] + 71
+
+Assim sendo, até o seguinte python script:
+
 ```python
 from pwn import *
 
@@ -93,11 +93,11 @@ libc.address = putsAddress - libc.symbols["__libc_start_main"] + 71 # offset par
 
 ``` 
 
-Tendo acesso ao endereço base podemos agora altera o endereço de retorno da frame atual por uma função ao nosso agrado.
-Neste caso chamaremos a função system() com o argumento da shell. 
+Tendo acesso ao endereço base podemos agora alterar o endereço de retorno da frame atual por uma função da nossa escolha.
+Neste caso chamaremos a função **system()** com o argumento da shell. 
 
 Ou seja, escrevemos o endereço de retorno, deixámos 4 bytes (por causa do esp, slide 13 da semana 5) e depois colocámos o endereço do /bin/sh. 
-Felizmente já existe uma biblioteca que nos trata disso.
+Felizmente já existe uma biblioteca que nos trata de todo este processo de **ROP** (Return Oriented Programming).
 
 ```python
 # Execute system
@@ -106,9 +106,7 @@ ropLib.system(next(libc.search(b"/bin/sh")))
 ropLib.exit()
 ```
 
-Notou-se ainda que o canário tem um byte nulo (ver que na imagem acima que o canário acaba(começa) com \0), o que parece ser um impedimento para a escrita.
-Se somarmos um valor pequeno ao ultimo byte do canário conseguimos passá-lo por cima sem sermos detetados.
-Isto acontece pois a deteção só é feita ao sair da função main.
+Notou-se ainda que o canário tem um byte nulo (ver que na imagem acima que o canário acaba(começa) com \0), o que parece ser um impedimento para a escrita, porém, se somarmos um valor pequeno ao último byte do canário conseguimos ultrapassá-lo sem sermos detetados. Tal só acontece porque a deteção de integridade do canário só é feita ao sair da função main.
 Podemos assim, numa escrita subsequente, repor o canário para o estado original.
 
 Assim sendo,
