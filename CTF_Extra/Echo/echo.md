@@ -2,14 +2,15 @@
 
 ### Vulnerabilidade 
 
-Primeiramente notou-se que através de string pedida como nome se podia descobrir informações importantes sobre o sistema, uma format string vulnerability.
+Primeiramente, notou-se que através da string pedida como nome input se podia descobrir informações importantes sobre o sistema, através de um ataque format string.
 
-Numa segunda instância percebeu-se que se podia provocar um buffer overflow. O array do nome, de tamanho 20 bytes, estava a ser lido como se tivesse 100 bytes. 
-Essa é a nossa janela para fazer um exploit
+Numa segunda instância percebeu-se que se podia provocar um buffer overflowm visto o array da string de nome, de tamanho 20 bytes, estar a ser lida como se tivesse 100 bytes. 
+
+Estas duas Vulnerabilidades são a base do exploit.
 
 ### Exploit
 
-Primeiro, convém criar uma função para nos ajudar no input para o servidor, uma vez que apenas podemos explorar o nome que enviámos é útil ter uma função para tal.
+Primeiro, convém criar uma função para nos ajudar no input para o servidor, uma vez que apenas podemos explorar o nome que enviámos, é útil ter uma função para tal.
 
 ```python
 def message(p, sms):
