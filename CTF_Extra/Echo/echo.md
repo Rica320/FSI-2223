@@ -123,11 +123,11 @@ Para repôr o estado do canário basta utilizar:
 r = message(p, b"." * 19)
 ```
 
-Agora basta correr o programa e sair dele, usando a opção "q".
+Agora basta correr o programa e sair dele, usando a opção "q" para obter a flag:
 
 ![imagem-6.png](./imagem-6.png)
 
-Aqui encontra-se o python script finalizado e que foi utilizado para adquirir a flag:
+Aqui encontra-se o python script finalizado que foi utilizado para adquirir a flag:
 
 ```python
 
