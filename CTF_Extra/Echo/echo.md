@@ -36,7 +36,7 @@ Uma vez que não tinhamos a certeza absoluta se o oitavo argumento seria ou não
 ![imagem.png](./imagem.png)
 ![imagem-1.png](./imagem-1.png)
 
-Uma vez que entre o canário e o return address temos o caller's save e o caller's ebp, pelo que o o return address estará no 11º argumento.
+Uma vez que entre o canário e o return address temos o caller's save e o caller's ebp, o return address estará no 11º argumento.
 
 Temos os argumentos 8 e 11:
 
@@ -49,14 +49,21 @@ Sabendo que esse argumento pertence a uma intrução da **__libc_start_main** pr
 
 ![imagem-5.png](./imagem-5.png)
 
-Ao fazer o mesmo para o endereço de __libc_start_main + 245, desta vez dentro do gdb, apercebemo-nos que o offset entre as duas intruções é de - 71 (decimal), sendo este importante para que consigámos dar uso a uma biblioteca auxiliar.
+Ao fazer o mesmo para o endereço de retorno, desta vez dentro do gdb e para a libc fornecida, apercebemo-nos que o offset entre o endereço leaked e o __start_libc_main é de - 71 (decimal), sendo este valor importante para que consigámos dar uso a uma biblioteca auxiliar de uma forma mais clara.
 
-**Nota:** A conta do offset varia conforme a biblioteca que se têm instalada
+Para descobrir o endereço base local da libc pode-se usar o gdb. Sendo oportuno para que através do segundo endereço cheguemos ao valor do offset pela subtração dos dois.
+
+![imagem-8.png](./imagem-8.png)
+
+Abaixo note-se a instrução dentro da libc que aparenta estar guardada nesse offset ... um pouco estranho
+![imagem-7.png](./imagem-7.png)
+
+**Nota:** A conta do offset varia conforme a biblioteca que se está a ser usada
 
 O endereço base será então:
-> 0xf7debee5 - libc.symbols["__libc_start_main"] + 71
+> Endereço_leak - libc.symbols["__libc_start_main"] + 71
 
-Assim sendo, até o seguinte python script:
+Assim sendo, até agora temos o seguinte python script:
 
 ```python
 from pwn import *
@@ -106,7 +113,9 @@ ropLib.system(next(libc.search(b"/bin/sh")))
 ropLib.exit()
 ```
 
-Notou-se ainda que o canário tem um byte nulo (ver que na imagem acima que o canário acaba(começa) com \0), o que parece ser um impedimento para a escrita, porém, se somarmos um valor pequeno ao último byte do canário conseguimos ultrapassá-lo sem sermos detetados. Tal só acontece porque a deteção de integridade do canário só é feita ao sair da função main.
+Notou-se ainda que o canário tem um byte nulo (ver que na imagem acima que o canário acaba(começa) com \0), o que parece ser um impedimento para a escrita, porém, se somarmos um valor pequeno ao último byte do canário conseguimos ultrapassá-lo sem sermos detetados. 
+
+Tal só acontece porque a deteção de integridade do canário só é feita ao sair da função main.
 Podemos assim, numa escrita subsequente, repor o canário para o estado original.
 
 Assim sendo temos:
@@ -122,6 +131,9 @@ Para repôr o estado do canário basta utilizar:
 ```python
 r = message(p, b"." * 19)
 ```
+Com isto o 20 elemento do array será um /0, restaurando o canário.
+Neste passo poderiámos talvez ter usado a vulnerablidade de format string para escrever o canário.
+
 
 Agora basta correr o programa e sair dele, usando a opção "q" para obter a flag:
 
